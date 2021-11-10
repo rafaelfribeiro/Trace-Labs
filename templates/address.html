@@ -1,0 +1,71 @@
+{% extends 'home.html' %}
+{% block title %}Address | {% endblock %}
+{% block header %} 
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"> 
+{% endblock %}
+
+{% block content %}
+<style>
+.hash-tag {
+    max-width: 171px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+</style>
+    <table id="transactions">
+        <thead>
+            <tr>
+               <th>Block Number</ht> 
+               <th>TimeStamp</ht>
+               <th>Hash</ht>
+               <th>Nonce</ht>
+               <th>Block Hash</ht>
+               <th>From</ht>
+               <th>To</ht>
+               <th>Value</ht> 
+        </thead>
+        <tbody>
+        {% for item in history.result %}    
+            <tr>
+                <td>{{ item.blockNumber }}</td>  
+                <td>{{ item.timeStamp.strftime('%Y-%m-%d') }}</td>  
+                <td><span class="hash-tag text-truncate">{{ item.hash }}</span></td>  
+                <td>{{ item.nonce }}</td>  
+                <td><span class="hash-tag text-truncate">{{ item.blockHash }}</span></td>  
+                <td><span class="hash-tag text-truncate">{{ item.from }}</span></td>  
+                <td><span class="hash-tag text-truncate">{{ item.to }}</span></td>  
+                <td>{{ item.value }}</td>  
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block js %}
+$(document).ready( function () {
+    $('#transactions').DataTable({ "columnDefs": [
+    { "width": "20%", "targets": 0 }
+  ]});
+} );
+const valores= {{ history.result|tojson|safe }};
+let total=0
+
+valores.forEach(function(o,i){
+    if(o.to == "0x7a250d5630b4cf539739df2c5dacb4c659f2488d"){
+        let eth_value = parseFloat(o.value) / 1000000000000000000;
+        
+        total += eth_value;
+    }else{
+        let eth_value = parseFloat(o.value) / 1000000000000000000;
+        total -= eth_value
+        
+        console.log(eth_value)
+    }
+})
+{% endblock %}
