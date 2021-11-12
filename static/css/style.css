@@ -21,7 +21,7 @@ h1 {
     font-size: 1.3em;
     position: absolute;
     width: 40em;
-    background: #eee;
+    background: #fcfcfc;
     top: 50%;
     left: 50%;
     padding: 20px;
@@ -78,6 +78,7 @@ input:focus {
 }
 
 .btn {
+    margin-top: 1em;
     display: inline-block;
     color: #4f4f4f;
     text-align: center;

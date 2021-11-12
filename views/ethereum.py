@@ -43,7 +43,7 @@ def home():
 
 def history(address):
     return json.loads(requests.get(
-        f"https://api.etherscan.io/api?module=account&action=txlist&address={address}&startblock=0&endblock=999999999&sort=asc"
+        f"https://api.etherscan.io/api?module=account&action=txlist&address={address}&startblock=0&endblock=999999999&sort=asc&apikey=EAVWKU25TNZCW9GCX4B6FIASNWU2D9CBK6"
     ).text)
 
 @ethereum_bp.route("/address")
@@ -59,15 +59,28 @@ def address():
         return redirect('/')
 
     balance = w3.eth.get_balance(address)
+
+    teste = w3.eth.filter({'address': address, })
+
     balance = w3.fromWei(balance, 'ether')
+    try_time_stamp = history(address)
+    from datetime import datetime
+    print(try_time_stamp)
+    try:
+        for item in try_time_stamp['result']:
+            date_formated = datetime.utcfromtimestamp(int(item['timeStamp'])).strftime('%d/%m/%Y %H:%M:%S')
+            item['timeStamp'] = date_formated
+    except Exception as e:
+        raise e
+            
     
-    return render_template('address.html', ethereum_price=ethereum_price, address=address, balance=balance,history=history(address))
+    return render_template('address.html', ethereum_price=ethereum_price, address=address, balance=balance,history=try_time_stamp)
 
 @ethereum_bp.route("/block/<block_number>")
 def block(block_number):
     block = w3.eth.get_block(int(block_number))
     
-    return render_template('block.html', block=block)
+    return render_template('block.html', block=block, ethereum_price=get_ethereum_price())
 
 @ethereum_bp.route('/transaction/<hash>')
 def transaction(hash):

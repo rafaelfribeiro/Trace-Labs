@@ -17,7 +17,41 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.container-fluid{
+    width:62em;
+    margin-top:10em;
+    
+}
+#transactions > tbody > tr > td{
+    font-size:11px;
+}
+body,
+html {
+    height: 100%
+}
+
+#particles-js canvas {
+    display: block;
+    vertical-align: bottom;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+    -webkit-transition: opacity .8s ease, -webkit-transform 1.4s ease;
+    transition: opacity .8s ease, transform 1.4s ease
+}
+
+#particles-js {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -10;
+    top: 0;
+    left: 0
+}
+.table-content{background-color: white}
 </style>
+<div class="table-content">
     <table id="transactions">
         <thead>
             <tr>
@@ -34,17 +68,18 @@
         {% for item in history.result %}    
             <tr>
                 <td>{{ item.blockNumber }}</td>  
-                <td>{{ item.timeStamp.strftime('%Y-%m-%d') }}</td>  
+                <td>{{ item.timeStamp }}</td>  
                 <td><span class="hash-tag text-truncate">{{ item.hash }}</span></td>  
                 <td>{{ item.nonce }}</td>  
-                <td><span class="hash-tag text-truncate">{{ item.blockHash }}</span></td>  
-                <td><span class="hash-tag text-truncate">{{ item.from }}</span></td>  
-                <td><span class="hash-tag text-truncate">{{ item.to }}</span></td>  
+                <td><span class="hash-tag text-truncate"><a href="/block/{{ item.blockNumber }}">{{ item.blockNumber }}</a></span></td>  
+                <td><span class="hash-tag text-truncate"><a href="/address?address={{ item.from }}">{{ item.from }}</a></span></td>  
+                <td><span class="hash-tag text-truncate"><a href="/address?address={{ item.to }}">{{ item.to }}</a></span></td>  
                 <td>{{ item.value }}</td>  
             </tr>
         {% endfor %}
         </tbody>
     </table>
+</div>
 {% endblock %}
 
 {% block js %}
