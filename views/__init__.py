@@ -1,9 +1,13 @@
 def get_ethereum_price():
     import ccxt
     binance = ccxt.binance()
-    ethereum_price = binance.fetch_ticker('ETH/USDC')
+    return binance.fetch_ticker('ETH/USDC')
 
-    return ethereum_price
+def get_bitcoin_price():
+    import ccxt
+    binance = ccxt.binance() 
+    return binance.fetch_ticker('BTC/USDC')
+
 
 
 INFURA_URL = "https://mainnet.infura.io/v3/a35c35e507c6493eb233d5b99c608d8f"

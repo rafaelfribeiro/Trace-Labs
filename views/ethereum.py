@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, flash, redirect
 from web3 import Web3
-from views import INFURA_URL, MINERS, get_ethereum_price
+from views import INFURA_URL, MINERS, get_ethereum_price, get_bitcoin_price
 import time, json, requests
 
 ethereum_bp = Blueprint('ethereum', __name__)
@@ -14,6 +14,8 @@ def home():
     eth = w3.eth
 
     ethereum_price = get_ethereum_price()
+    bitcoin_price = get_bitcoin_price()
+
 
     latest_blocks = []
     for block_number in range(eth.block_number, eth.block_number-10, -1):
@@ -26,19 +28,14 @@ def home():
         latest_transactions.append(transaction)
 
     current_time = time.time()
-    # address = w3.toChecksumAddress('0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae') 
-    address = w3.toChecksumAddress('0x7a250d5630b4cf539739df2c5dacb4c659f2488d') 
-    
-    
-
     return render_template('home.html', 
         miners=MINERS,
         current_time=current_time, 
         eth=eth, 
         ethereum_price=ethereum_price,
+        bitcoin_price=bitcoin_price,
         latest_blocks=latest_blocks,
-        latest_transactions=latest_transactions,
-        history=history(address)
+        latest_transactions=latest_transactions
         )
 
 def history(address):
@@ -65,14 +62,12 @@ def address():
     balance = w3.fromWei(balance, 'ether')
     try_time_stamp = history(address)
     from datetime import datetime
-    print(try_time_stamp)
     try:
         for item in try_time_stamp['result']:
-            date_formated = datetime.utcfromtimestamp(int(item['timeStamp'])).strftime('%d/%m/%Y %H:%M:%S')
-            item['timeStamp'] = date_formated
+            item['timeStamp'] = datetime.utcfromtimestamp(int(item['timeStamp'])).strftime('%d/%m/%Y %H:%M:%S')
     except Exception as e:
-        raise e
-            
+        flash('An error occurred while formatting timestamp!', 'danger')
+        return redirect('/')
     
     return render_template('address.html', ethereum_price=ethereum_price, address=address, balance=balance,history=try_time_stamp)
 
