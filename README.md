@@ -1,9 +1,9 @@
-# Trace-Labs
+# Trace-Labs Test
 Welcome to Ethereum transactions crawler task
 
 # First steps
  - Clone / Download project
- - Go to the path and run ```pip install -r requirements.txt```
+ - Go to the path and (setup your enviorment if you want) run ```pip install -r requirements.txt``` to download dependencies.
  
 # Run the project!
  - Open terminal/cmd in path
