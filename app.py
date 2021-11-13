@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_login import login_required, current_user
-from views import ethereum as eth_view
+from views import ethereum, home, bitcoin
 
 app = Flask(__name__)
 
@@ -35,4 +35,6 @@ class ConfigClass(object):
     # # USER_ENABLE_FORGOT_PASSWORD = True
 
 app.config.from_object(__name__+'.ConfigClass')
-app.register_blueprint(eth_view.ethereum_bp)
+app.register_blueprint(ethereum.ethereum_bp)
+app.register_blueprint(home.home_bp)
+app.register_blueprint(bitcoin.bitcoin_bp)

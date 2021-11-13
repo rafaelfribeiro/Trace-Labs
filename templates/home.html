@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+    .table{width:100%;margin-bottom:1rem;background-color:transparent}.table td,.table th{padding:.75rem;vertical-align:top;border-top:1px solid #dee2e6}.table thead th{vertical-align:bottom;border-bottom:2px solid #dee2e6}.table tbody+tbody{border-top:2px solid #dee2e6}.table .table{background-color:#fff}
+    .table-striped tbody tr:nth-of-type(odd){background-color:rgba(0,0,0,.05)}
+</style>
+    <div class="row">
+        <div class="col-12">
+            <h3>Latest Blocks</h3>
+            <table class="table table-striped">
+                {% for block in latest_blocks %}
+                <tr>
+                    <td>
+                        <h5>Block</h5>
+                        <a href="/block/{{ block.number }}">{{ block.number }} </a>
+                        <p>{{ (current_time - block.timestamp)|int }} seconds ago </p>
+                    </td>
+                    <td>
+                        <h5>Miner</h5>
+                        <a href="/address?address={{ block.miner }}&block=0">
+                            {% if block.miner.lower() in miners %}
+                                {{ miners[block.miner.lower()] }}
+                            {% else %}
+                                {{ block.miner.lower() }}
+                            {% endif %}
+                        </a>
+                        <p>{{ block.transactions|length }} transactions</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+
+        </div>
+
+    </div>
+{% endblock %}

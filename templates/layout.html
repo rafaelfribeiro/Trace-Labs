@@ -11,6 +11,10 @@
 
 <body>
     <style>
+        .coin{border-radius: 10px;}
+        .coin.selected{box-shadow: 1px 1px 10px 0px #0000006b}
+        .coin:hover{ cursor: pointer;box-shadow: 1px 3px 10px 6px #0000006b;}
+        .hide{display: none;}
        
     </style>
 
@@ -24,15 +28,19 @@
 
             </div>
             <div class="col-12">
-                <h2>Ethereum price: ${{ ethereum_price["last"] }}</h2>
-                <h2>Bitcoin price: ${{ bitcoin_price["last"] }}</h2>
-
+                <div class="coin eth selected"><h2><img width="35" src="/static/img/eth.svg" />Ethereum price: USD ${{ ethereum_price["last"] }}</h2></div>
+                <div class="coin btc"><h2><img width="35" style="margin: 0.2em;" src="/static/img/bitcoin.svg" />Bitcoin price: USD ${{ bitcoin_price["last"] }}</h2></div>
             </div>
             <div class="col-12">
                 <form class="d-flex" action="/address" method="get">
                     <label class="input">
                         <input class="field" type="text" id="address" name="address" placeholder=" ">
                         <span class="label">Insert the address of wallet </span>
+                    </label>
+                    <label class="input">
+                        <input class="field" type="text" id="block" name="block" placeholder=" ">
+                        <span class="label">Start Block</span>
+                        <p style="font-size: 13px;margin: -15px 3px 0px">default is zero</p>
                     </label>
                     <button class="btn btn-primary" type="submit">Search</button>
             </form>
@@ -97,6 +105,17 @@
         for (const button of buttons) {
             button.addEventListener("click", createRipple);
         }
+        $('.coin').click(function(){
+            $('.coin').removeClass('selected')
+            $(this).addClass('selected');
+            $('.input').removeClass('hide')
+            if($(this).hasClass('btc')){
+                $('.input:eq(1)').addClass('hide')
+                $('form').attr('action', '/bitcoin/address')
+            }else{
+                $('form').attr('action', '/address')
+            }
+        })
 
         {% block js %}{% endblock %}
     </script>

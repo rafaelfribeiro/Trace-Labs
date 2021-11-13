@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+{% block title %}Address | {% endblock %}
+{% block header %} 
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"> 
+{% endblock %}
+
+{% block content %}
+<style>
+.hash-tag {
+    max-width: 171px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.container-fluid{
+    width:62em;  
+}
+#transactions > tbody > tr > td{
+    font-size:11px;
+}
+body,
+html {
+    height: 100%
+}
+
+#particles-js canvas {
+    display: block;
+    vertical-align: bottom;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+    -webkit-transition: opacity .8s ease, -webkit-transform 1.4s ease;
+    transition: opacity .8s ease, transform 1.4s ease
+}
+
+#particles-js {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -10;
+    top: 0;
+    left: 0
+}
+.table-content{background-color: white}
+.footer-distributed{bottom: -700;}
+</style>
+<div class="table-content">
+    <div class="col=6">
+        <h4>Current Balance: BTC ${{ balance }}</h4>
+    </div>
+    <table id="transactions">
+        
+        <thead>
+            <tr>
+               <th>Block height</ht> 
+               <th>Confirmations</ht>
+               <th>REF Balance</ht>
+               <th>Spent</ht>
+               <th>Trx_hash</ht>
+               <th>Value</ht> 
+        </thead>
+        <tbody>
+        {% for item in address_info.txrefs  %}    
+            <tr>
+                <td><span class="hash-tag text-truncate">{{ item.block_height }}</span></td>  
+                <td>{{ item.confirmations }}</td>  
+                <td>{{ item.ref_balance }}</td>  
+                <td>{{ item.spent|safe }}</td>  
+                <td><span class="hash-tag text-truncate">{{ item.tx_hash }}</span></td>  
+                <td>{{ item.value }}</td>  
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block js %}
+$(document).ready( function () {
+    $('#transactions').DataTable({ "columnDefs": [
+    { "width": "20%", "targets": 0 }
+  ], "lengthChange": false});
+} );
+
+{% endblock %}

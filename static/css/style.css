@@ -17,12 +17,20 @@ h1 {
     color: inherit;
 }
 
+img{
+    margin-right: 0.5em;
+}
+
+.particles-js-canvas-el{
+    height: 1248px!important;
+}
 .container-fluid {
     font-size: 1.3em;
     position: absolute;
     width: 40em;
+    min-height: 50em;
     background: #fcfcfc;
-    top: 50%;
+    top: 30em;
     left: 50%;
     padding: 20px;
     border-radius: 4px;
@@ -64,6 +72,7 @@ h1 {
     color: #1266f1;
     background: transparent;
     border-radius: 4px;
+    margin-bottom: 1em;
 }
 
 .field:focus+.label,

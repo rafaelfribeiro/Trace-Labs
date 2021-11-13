@@ -2,7 +2,6 @@
 {% block content %}
 <style>
 #blocktable tbody tr:nth-of-type(odd){background-color:rgba(0,0,0,.05)}
-.footer-distributed{bottom: -700;}
 </style>
     <div class="container">
         <div class="row mt-4">
@@ -19,7 +18,7 @@
                 <tr>
                     <td>Miner</td>
                     <td>
-                        <a href="/address?address={{ block.miner }}">{{ block.miner }}</a>
+                        <a href="/address?address={{ block.miner }}"&block=0>{{ block.miner }}</a>
                     </td>
                 </tr>
                 <tr>

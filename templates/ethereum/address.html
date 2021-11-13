@@ -19,8 +19,6 @@
 }
 .container-fluid{
     width:62em;
-    margin-top:10em;
-    
 }
 #transactions > tbody > tr > td{
     font-size:11px;
@@ -53,6 +51,7 @@ html {
 .table-content{background-color: white}
 </style>
 <div class="table-content">
+    <h4>Current Balance: ETH ${{ balance }}</h4>
     <table id="transactions">
         <thead>
             <tr>
@@ -60,21 +59,19 @@ html {
                <th>TimeStamp</ht>
                <th>Hash</ht>
                <th>Nonce</ht>
-               <th>Block Hash</ht>
                <th>From</ht>
                <th>To</ht>
-               <th>Value</ht> 
+               <th>Value (Wei)</ht> 
         </thead>
         <tbody>
         {% for item in history.result %}    
             <tr>
-                <td>{{ item.blockNumber }}</td>  
+                <td><span class="hash-tag text-truncate"><a href="/block/{{ item.blockNumber }}">{{ item.blockNumber }}</a></span></td>  
                 <td>{{ item.timeStamp }}</td>  
                 <td><span class="hash-tag text-truncate">{{ item.hash }}</span></td>  
                 <td>{{ item.nonce }}</td>  
-                <td><span class="hash-tag text-truncate"><a href="/block/{{ item.blockNumber }}">{{ item.blockNumber }}</a></span></td>  
-                <td><span class="hash-tag text-truncate"><a href="/address?address={{ item.from }}">{{ item.from }}</a></span></td>  
-                <td><span class="hash-tag text-truncate"><a href="/address?address={{ item.to }}">{{ item.to }}</a></span></td>  
+                <td><span class="hash-tag text-truncate"><a href="/address?address={{ item.from }}&block=0">{{ item.from }}</a></span></td>  
+                <td><span class="hash-tag text-truncate"><a href="/address?address={{ item.to }}&block=0">{{ item.to }}</a></span></td>  
                 <td>{{ item.value }}</td>  
             </tr>
         {% endfor %}
@@ -87,7 +84,7 @@ html {
 $(document).ready( function () {
     $('#transactions').DataTable({ "columnDefs": [
     { "width": "20%", "targets": 0 }
-  ]});
+  ], "lengthChange": false});
 } );
 const valores= {{ history.result|tojson|safe }};
 let total=0
