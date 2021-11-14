@@ -56,9 +56,16 @@ def transaction(hash):
     value = w3.fromWei(tx.value, 'ether')
     receipt = w3.eth.get_transaction_receipt(hash)
     ethereum_price = get_ethereum_price()
+    bitcoin_price = get_bitcoin_price()
 
     gas_price = w3.fromWei(tx.gasPrice, 'ether')
 
-    return render_template('ethereum/transaction.html', tx=tx, value=value, receipt=receipt, gas_price=gas_price, ethereum_price=ethereum_price)
+    return render_template('ethereum/transaction.html', 
+                            tx=tx, 
+                            value=value, 
+                            receipt=receipt, 
+                            gas_price=gas_price, 
+                            ethereum_price=ethereum_price, 
+                            bitcoin_price=bitcoin_price)
 
     

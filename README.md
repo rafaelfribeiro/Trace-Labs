@@ -18,8 +18,8 @@ Welcome to Ethereum transactions crawler task
 ## Usage of Pages
 Since wasn't anything to store in task I decided to don't use any database.
 ### In ```Home``` you can:
-- See the current price of Ethereum and Bitcoin in USD
-- Check the lates Blocks of Ethereum and Miner responsable
+- Check the current price of Ethereum and Bitcoin in USD
+- Check the latest Blocks of Ethereum and Miner responsable
 - Check an Ethereum Address by inserting an address and starting Block (optional)
 
 - Check an Bitcoin Address by clicking in Bitcoin price section and inserting the address
