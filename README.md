@@ -1,5 +1,6 @@
 # Trace-Labs Test
 Welcome to Ethereum transactions crawler task
+The project was a task for a interview for Trace Labs
 
 # First steps
  - Clone / Download project
